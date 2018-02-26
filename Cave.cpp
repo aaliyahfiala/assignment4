@@ -5,30 +5,37 @@
 
 
 Cave::Cave() : cave_size(4) {
-	std::vector<std::vector<Room> > cave(4);
 	for (int i = 0; i < 4; i++) {
-		cave.at(i) = std::vector<Room>(4);
+		std::vector<Room> row;
+		for (int j = 0; j < 4; j++) {
+			Room r;
+			row.push_back(r);
+		}
+		cave.push_back(row);
 	}
 
 	pits();
 	bats();
 	wumpus();
 	gold();
-	start();
-
+	start(); 
 }
 
 Cave::Cave(int n) : cave_size(n) {
-	std::vector<std::vector<Room> > cave(n);
 	for (int i = 0; i < n; i++) {
-		cave.at(i) = std::vector<Room>(n);
+		std::vector<Room> row;
+		for (int j = 0; j < n; j++) {
+			Room r;
+			row.push_back(r);
+		}
+		cave.push_back(row);
 	}
 
 	pits();
 	bats();
 	wumpus();
 	gold();
-	start();
+	start(); 
 }
 	
 std::pair<int, int>  Cave::get_location(int x, int y) { // returns spot in array if cave[a][b], returns (a, b)
