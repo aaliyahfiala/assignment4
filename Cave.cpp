@@ -1,0 +1,143 @@
+
+#include "Cave.hpp"
+#include <stdlib.h> //for rand and srand
+#include <time.h> //for time
+
+
+Cave::Cave() : cave_size(4) {
+	std::vector<std::vector<Room> > cave(4);
+	for (int i = 0; i < 4; i++) {
+		cave.at(i) = std::vector<Room>(4);
+	}
+
+	pits();
+	bats();
+	wumpus();
+	gold();
+	start();
+
+}
+
+Cave::Cave(int n) : cave_size(n) {
+	std::vector<std::vector<Room> > cave(n);
+	for (int i = 0; i < n; i++) {
+		cave.at(i) = std::vector<Room>(n);
+	}
+
+	pits();
+	bats();
+	wumpus();
+	gold();
+	start();
+}
+	
+std::pair<int, int>  Cave::get_location(int x, int y) { // returns spot in array if cave[a][b], returns (a, b)
+	std::cout << "Current location is (" << x << ", " << y << ")." << std::endl;
+
+	return std::make_pair(x, y);
+}
+
+void Cave::bats() { //give 2 rand rooms bat
+	srand(time(NULL));
+	int x, y;
+	
+	for (int i = 0; i < 2; i++ ) {
+	
+		do {
+			x = rand() % cave_size;
+			y = rand() % cave_size;
+	
+		} while(cave.at(x).at(y).has_event());
+	
+		cave.at(x).at(y).give_bat();
+
+		//FOR TESTING PURPOSES DELETE LATER
+		std::cout << "Bats at (" << x << ", " << y << ")." << std::endl;
+	}
+}
+
+void Cave::pits() { //give 2 rand rooms pits 
+	srand(time(NULL));
+	int x, y;
+	
+	for (int i = 0; i < 2; i++ ) {
+	
+		do {
+			x = rand() % cave_size;
+			y = rand() % cave_size;
+	
+		} while(cave.at(x).at(y).has_event());
+	
+		cave.at(x).at(y).give_pit();
+
+		//FOR TESTING PURPOSES DELETE LATER
+		std::cout << "Pits at (" << x << ", " << y << ")." << std::endl;
+	}
+}
+
+void Cave::gold() { //give 1 room gold 
+	srand(time(NULL));
+	int x, y;
+	
+	do {
+		x = rand() % cave_size;
+		y = rand() % cave_size;
+
+	} while(cave.at(x).at(y).has_event());
+	
+	cave.at(x).at(y).give_gold();
+
+	//FOR TESTING PURPOSES DELETE LATER
+	std::cout << "Gold at (" << x << ", " << y << ")." << std::endl;
+}
+
+void Cave::wumpus() { //give 1 room wumpus
+	srand(time(NULL));
+	int x, y;
+	
+	do {
+		x = rand() % cave_size;
+		y = rand() % cave_size;
+	
+	} while(cave.at(x).at(y).has_event());
+	
+	cave.at(x).at(y).give_wumpus();
+
+	//FOR TESTING PURPOSES DELETE LATER
+	std::cout << "Wumpus at (" << x << ", " << y << ")." << std::endl;
+}
+
+std::pair<int, int> Cave::start() { //determine starting/end room and return x, y coordinates
+	srand(time(NULL));
+	int x, y;
+	
+	do {
+		x = rand() % cave_size;
+		y = rand() % cave_size;
+	
+	} while(cave.at(x).at(y).has_event());
+	
+	cave.at(x).at(y).give_start();
+
+	//FOR TESTING PURPOSES DELETE LATER
+	std::cout << "Starting point at (" << x << ", " << y << ")." << std::endl;
+
+	return std::make_pair(x,y);
+}
+ 
+
+std::string Cave::percepts(int x, int y){
+//where [a][b] is positiong, displays message if event is up/down/left/right
+	if (cave.at(x + 1).at(y + 1).has_event())
+		cave.at(x + 1).at(y + 1).display_percept();
+
+	if (cave.at(x - 1).at(y + 1).has_event())
+		cave.at(x - 1).at(y + 1).display_percept();
+
+	if (cave.at(x + 1).at(y - 1).has_event())
+		cave.at(x + 1).at(y - 1).display_percept();
+
+	if (cave.at(x - 1).at(y - 1).has_event())
+		cave.at(x - 1).at(y - 1).display_percept();
+	
+}
