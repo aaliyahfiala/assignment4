@@ -1,3 +1,9 @@
+/*********************************************************************
+ * ** Program Filename: Event.hpp
+ * ** Description: This is the Event class definition file
+ * ** Input: none
+ * ** Output: none
+ * *********************************************************************/
 #ifndef __EVENT_HPP
 #define __EVENT_HPP
 

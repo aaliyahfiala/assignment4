@@ -1,3 +1,9 @@
+/*********************************************************************
+ * ** Program Filename: Room.hpp
+ * ** Description: This is the Room class definition file
+ * ** Input: none
+ * ** Output: none
+ * *********************************************************************/
 #ifndef __ROOM_HPP
 #define __ROOM_HPP
 

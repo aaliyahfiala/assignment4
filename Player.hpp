@@ -1,5 +1,11 @@
-#ifndef __PLAYER_CPP
-#define __PLAYER_CPP
+/*********************************************************************
+ * ** Program Filename: Player.hpp
+ * ** Description: This is the Player class definition file
+ * ** Input: none
+ * ** Output: none
+ * *********************************************************************/
+#ifndef __PLAYER_HPP
+#define __PLAYER_HPP
 
 #include <utility> //for pair
 #include "Cave.hpp"
@@ -21,6 +27,7 @@ public:
 	void shoot_arrow();
 
 	void move_around();
+	void room_check();
 };
 
 #endif

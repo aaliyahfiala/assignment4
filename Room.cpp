@@ -1,4 +1,9 @@
-
+/*********************************************************************
+ * ** Program Filename: Room.cpp
+ * ** Description: This is the Room class function definition file
+ * ** Input: none
+ * ** Output: none
+ * *********************************************************************/
 #include "Room.hpp"
 
 Room::Room() : event(event), event_type('n') {} //intialize to no event occurs in event class

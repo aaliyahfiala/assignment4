@@ -1,4 +1,9 @@
-
+/*********************************************************************
+ * ** Program Filename: Cave.hpp
+ * ** Description: This is the Cave funtion definitions file
+ * ** Input: none
+ * ** Output: none
+ * *********************************************************************/
 #include "Cave.hpp"
 #include <stdlib.h> //for rand and srand
 #include <time.h> //for time
@@ -18,7 +23,6 @@ Cave::Cave() : cave_size(4) {
 	bats();
 	wumpus();
 	gold();
-	start(); 
 }
 
 Cave::Cave(int n) : cave_size(n) {
@@ -35,13 +39,10 @@ Cave::Cave(int n) : cave_size(n) {
 	bats();
 	wumpus();
 	gold();
-	start(); 
 }
 	
-std::pair<int, int>  Cave::get_location(int x, int y) { // returns spot in array if cave[a][b], returns (a, b)
-	std::cout << "Current location is (" << x << ", " << y << ")." << std::endl;
-
-	return std::make_pair(x, y);
+Room Cave::get_location(int x, int y) {
+	return cave[x][y];
 }
 
 void Cave::bats() { //give 2 rand rooms bat
@@ -133,18 +134,25 @@ std::pair<int, int> Cave::start() { //determine starting/end room and return x, 
 }
  
 
-std::string Cave::percepts(int x, int y){
+void Cave::percepts(int x, int y){
 //where [a][b] is positiong, displays message if event is up/down/left/right
-	if (cave.at(x + 1).at(y + 1).has_event())
-		cave.at(x + 1).at(y + 1).display_percept();
-
-	if (cave.at(x - 1).at(y + 1).has_event())
-		cave.at(x - 1).at(y + 1).display_percept();
-
-	if (cave.at(x + 1).at(y - 1).has_event())
-		cave.at(x + 1).at(y - 1).display_percept();
-
-	if (cave.at(x - 1).at(y - 1).has_event())
-		cave.at(x - 1).at(y - 1).display_percept();
+	if (x != (cave_size - 1) && y != (cave_size - 1)) {
+		if (cave.at(x + 1).at(y + 1).has_event())
+			cave.at(x + 1).at(y + 1).display_percept();
+	}
 	
+	if (x != 0 && y != (cave_size - 1)) {
+		if (cave.at(x - 1).at(y + 1).has_event())
+			cave.at(x - 1).at(y + 1).display_percept();
+	}
+
+	if (x != (cave_size - 1) && y != 0) {
+		if (cave.at(x + 1).at(y - 1).has_event())
+			cave.at(x + 1).at(y - 1).display_percept();
+	}
+
+	if (x != 0 && y != 0) {
+		if (cave.at(x - 1).at(y - 1).has_event())
+			cave.at(x - 1).at(y - 1).display_percept();
+	}
 }
