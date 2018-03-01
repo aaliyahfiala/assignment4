@@ -24,6 +24,7 @@ private:
 	char event_type;
 public:
 	Room();
+	~Room();
 	
 	std::string display_percept();
 

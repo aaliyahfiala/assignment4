@@ -8,33 +8,37 @@
 
 Room::Room() : event(event), event_type('n') {} //intialize to no event occurs in event class
 
+Room::~Room() {
+//	delete event; compiler error?
+}
+
 std::string Room::display_percept() { 
 	return this->event->get_percept();
 }
 
 void Room::give_bat() {
-	event = new Bats;
+	this->event = new Bats;
 	event_type = 'b';
 }
 
 void Room::give_pit() {
-	event = new Pit;
+	this->event = new Pit;
 	event_type = 'p';
 }
 
 void Room::give_wumpus() {
-	event = new Wumpus;
+	this->event = new Wumpus;
 	event_type = 'w';
 }
 
 void Room::give_gold() {
-	event = new Gold;
+	this->event = new Gold;
 	event_type = 'g';
 
 }
 
 void Room::give_start() {
-	event = new Start;
+	this->event = new Start;
 	event_type = 's';
 }
 

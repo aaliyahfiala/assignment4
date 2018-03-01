@@ -7,6 +7,8 @@
  * ** Output: a fun game of hunt the wumpus
  * *********************************************************************/
 #include <iostream> 
+#include <string>
+#include <stdlib.h>
 
 #include "Player.hpp"
 #include "Cave.hpp"
@@ -17,10 +19,11 @@ int main(int argc, char *argv[]) {
 	
 	Cave c;
 
-	//Player p(argc);	
+//	Player p = std::stoi(argv[1]);	
 
 	Player p;
 
+//	do {
 	p.get_arrows();
 
 	p.shoot_arrow();
@@ -31,6 +34,9 @@ int main(int argc, char *argv[]) {
 		std::cout << "Your ran out of arrows. Game over." << std::endl;
 		return 1;//change to exit loop
 	}
+	//} while ( //Game is not over
+	//arrows != 0
+	//room in doesnt have a wumpus
 
 	p.move_around();
 

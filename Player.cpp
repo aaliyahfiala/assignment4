@@ -28,6 +28,8 @@ void Player::shoot_arrow() {
 
 void Player::move_around() {
 
+	this->cave.percepts(x, y);
+	
 	std::cout << "Which direction would you like to move in?" << '\n';
 	if (x != 0)
 		std::cout << "Enter n for north." << '\n';
@@ -38,8 +40,6 @@ void Player::move_around() {
 	if (y != 0) 
 		std::cout << "Enter w for west." << '\n';
 
-	cave.percepts(this->x, this->y);
-	
 	std::cin >> direction;
 
 	if (direction == 'n')
