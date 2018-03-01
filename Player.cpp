@@ -6,16 +6,27 @@
  * *********************************************************************/
 #include "Player.hpp"
 
-Player::Player() : cave_size(4), cave(4), arrows(3), direction('x') {
+Player::Player() : cave_size(4), cave(4), arrows(3), direction('q'), game_over(false), game_won(false), has_gold(false), killed_wumpus(false) {
 	std::pair<int, int> p = cave.start();
 	this->x = p.first;
 	this->y = p.second; 
+
+	this->x_start = p.first;
+	this->y_start = p.second;
 }
 
-Player::Player(int cave_size) : cave_size(cave_size), cave(cave_size), arrows(3), direction('x') {
+Player::Player(int cave_size) : cave_size(cave_size), cave(cave_size), arrows(3), direction('x'), game_over(false), game_won(false), has_gold(false), killed_wumpus(false) {
 	std::pair<int, int> p = cave.start();
 	this->x = p.first;
 	this->y = p.second;
+}
+
+bool Player::is_game_over() {
+	return this->game_over;
+}
+
+bool Player::is_game_won() {
+	return this->game_won;
 }
 
 int Player::get_arrows() {
@@ -23,7 +34,58 @@ int Player::get_arrows() {
 }
 
 void Player::shoot_arrow() {
-	this->arrows--;
+	if(this->arrows = 0) {
+		std::cout << "You ran out of arrows! Game over." << std::endl;
+		this->game_over = true;
+	}
+
+	char arrow = 'n';
+	std::cout << "Do you want to shoot an arrow? y/n. " << std::endl;
+	
+	std::cin >> arrow;
+	
+	if (arrow == 'y') {
+
+		this->arrows--;
+
+		std::cout << "Which direction would you like to shoot the arrow?" << '\n';
+		if (x != 0)
+			std::cout << "Enter n for north." << '\n';
+		if (y != (cave_size - 1))
+			std::cout << "Enter e for east." << '\n';
+		if (x != (cave_size - 1))
+			std::cout << "Enter s for south." << '\n';
+		if (y != 0) 
+			std::cout << "Enter w for west." << '\n';
+
+		std::cin >> direction;
+		
+		for (int i = 0, j = 0; i < 3 && j < 3; i++, j++) {
+
+				if (direction == 'n')
+					j = this->y + 1;
+				if (direction == 's')
+					j = this->y - 1;
+				if (direction == 'w')
+					i = this->x - 1;
+				if (direction == 'e')
+					i = this->x + 1;
+
+				if (cave.get_location(i, j).has_wumpus()) {
+					killed_wumpus = true;
+				}
+		}
+		
+		if (killed_wumpus == false) {
+			srand(time(NULL));
+			int w;
+			w = rand() % 4;
+			if (w != 1) {
+				cave.wumpus();//wumpus moves to new spot	
+			}
+		}
+		
+	}
 }
 
 void Player::move_around() {
@@ -54,19 +116,35 @@ void Player::move_around() {
 
 void Player::room_check() {
 	if (cave.get_location(x, y).has_bat()) {
-		//randomly move x and y to another room
+		std::cout << "Oh no! You've been dragged to a new location by bats!" << std::endl;
+		srand(time(NULL));
+		int new_x;
+		int new_y;
+
+		new_x = rand() % cave_size;
+		new_y = rand() % cave_size;
+
+		this->x = new_x;
+		this->y = new_y;
 	}
+
 	if (cave.get_location(x, y).has_pit()) {
-		//cout game over and return 1 and end game
+		std::cout << "You fell into a dark abyss! Game over." << std::endl;
+		this->game_over = true;
 	}
+
 	if (cave.get_location(x, y).has_gold()) {
-		//cout << you got gold! << 
-		//remove gold from room?
-		//player needs gold to win
+		std::cout << "You found gold!" << std::endl; 
+		this->has_gold = true;
 	}
+
 	if (cave.get_location(x, y).has_wumpus()) {
-		//player dies
-		//same as if it has pits, game over
-		//Usually, the Wumpus is peacefully asleep in his cave. Two things wake the Wumpus up, however: the adventurer entering his room or shooting an arrow and missing him. If the Wumpus wakes up while in the same room as the adventurer, the Wumpus will angrily eat the adventurer, ending the game. If the Wumpus just wakes up from hearing an arrow being fired, though, there’s a 75% chance he will move to a random empty room in the cave to avoid being found.
+		std::cout << "Oh no! You were violently killed by the Wumpus!" << std::endl;
+		this->game_over = true;
+	}
+
+	if (this->has_gold == true && x == x_start && y == y_start && killed_wumpus == true) {
+		this->game_won = true;
 	}
 }
+

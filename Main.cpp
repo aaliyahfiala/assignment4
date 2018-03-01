@@ -17,28 +17,22 @@
 
 int main(int argc, char *argv[]) {
 	
-	Cave c;
-
 //	Player p = std::stoi(argv[1]);	
+//insert error, cant have less than 4 * 4 return 1;
 
 	Player p;
 
-//	do {
-	p.get_arrows();
+	do {
 
-	p.shoot_arrow();
+		std::cout << "You have " << p.get_arrows() << " arrows." << std::endl;
+	
+		p.move_around();
 
-	std::cout << "Number of arrows = " << p.get_arrows() << std::endl;
+		p.shoot_arrow();
+		
+		p.room_check();
 
-	if (p.get_arrows() == 0) {
-		std::cout << "Your ran out of arrows. Game over." << std::endl;
-		return 1;//change to exit loop
-	}
-	//} while ( //Game is not over
-	//arrows != 0
-	//room in doesnt have a wumpus
-
-	p.move_around();
+	} while (p.is_game_over() == true || p.is_game_won() == true);	
 
 	return 0;
 }

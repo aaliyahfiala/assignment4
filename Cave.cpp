@@ -136,23 +136,23 @@ std::pair<int, int> Cave::start() { //determine starting/end room and return x, 
 
 void Cave::percepts(int x, int y){
 //where [a][b] is positiong, displays message if event is up/down/left/right
-	if (x != (cave_size - 1) && y != (cave_size - 1)) {
-		if (cave.at(x + 1).at(y + 1).has_event())
-			std::cout << cave.at(x + 1).at(y + 1).display_percept() << std::endl;
+	if (y != (cave_size - 1)) {
+		if (cave.at(x).at(y + 1).has_event())
+			std::cout << cave.at(x).at(y + 1).display_percept() << std::endl;
 	}
 	
-	if (x != 0 && y != (cave_size - 1)) {
-		if (cave.at(x - 1).at(y + 1).has_event())
-			std::cout << cave.at(x - 1).at(y + 1).display_percept() << std::endl;
+	if (x != 0) {
+		if (cave.at(x - 1).at(y).has_event())
+			std::cout << cave.at(x - 1).at(y).display_percept() << std::endl;
 	}
 
-	if (x != (cave_size - 1) && y != 0) {
-		if (cave.at(x + 1).at(y - 1).has_event())
-			std::cout << cave.at(x + 1).at(y - 1).display_percept() << std::endl;
+	if (x != (cave_size - 1)) {
+		if (cave.at(x + 1).at(y).has_event())
+			std::cout << cave.at(x + 1).at(y).display_percept() << std::endl;
 	}
 
-	if (x != 0 && y != 0) {
-		if (cave.at(x - 1).at(y - 1).has_event())
-			std::cout << cave.at(x - 1).at(y - 1).display_percept() << std::endl;
+	if (y != 0) {
+		if (cave.at(x).at(y - 1).has_event())
+			std::cout << cave.at(x).at(y - 1).display_percept() << std::endl;
 	}
 }
