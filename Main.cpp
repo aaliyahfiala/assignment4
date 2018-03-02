@@ -17,7 +17,7 @@
 
 int main(int argc, char *argv[]) {
 	
-//	Player p = std::stoi(argv[1]);	
+//	Player p = atoi(argv[1]);	
 //insert error, cant have less than 4 * 4 return 1;
 
 	Player p;
