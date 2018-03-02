@@ -20,6 +20,8 @@ private:
 public:
 	Cave(); //sets it to a 4 * 4
 	Cave(int n); //user defined
+	
+	void operator=(const Cave& c);
 
 	Room get_location(int x, int y); //retruns cave[x][y]
 	

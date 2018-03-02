@@ -33,6 +33,8 @@ public:
 	Player();
 	Player(int cave_size);
 	
+	void operator=(const Player& p);
+
 	bool is_game_over();
 	bool is_game_won();
 	int get_arrows();

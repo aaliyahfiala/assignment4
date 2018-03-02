@@ -21,8 +21,21 @@ Player::Player(int cave_size) : cave_size(cave_size), cave(cave_size), arrows(3)
 	this->y = p.second;
 }
 
+void Player::operator=(const Player& p) {
+	this->cave = p.cave;
+	this->cave_size = p.cave_size;
+	this->game_over = false;
+	this->game_won = false;
+	this->has_gold = false;
+	this->killed_wumpus = false;
+	this->arrows = 3;
+	this->direction = 'x';
+	this->x = p.x;
+	this->y = p.y;
+}
+
 bool Player::is_game_over() {
-	return this->game_over;
+	return this->game_over;	
 }
 
 bool Player::is_game_won() {
@@ -34,59 +47,58 @@ int Player::get_arrows() {
 }
 
 void Player::shoot_arrow() {
-	if(this->arrows = 0) {
+	if(this->arrows == 0) {
 		std::cout << "You ran out of arrows! Game over." << std::endl;
 		this->game_over = true;
+		return;
 	}
 
-	char arrow = 'n';
-	std::cout << "Do you want to shoot an arrow? y/n. " << std::endl;
+	this->arrows--;
+
+	std::cout << "Which direction would you like to shoot the arrow?" << '\n';
+
+	if (x != 0)
+		std::cout << "Enter n for north." << '\n';
+	if (y != (cave_size - 1))
+		std::cout << "Enter e for east." << '\n';
+	if (x != (cave_size - 1))
+		std::cout << "Enter s for south." << '\n';
+	if (y != 0) 
+		std::cout << "Enter w for west." << '\n';
+
+	std::cin >> direction;
 	
-	std::cin >> arrow;
-	
-	if (arrow == 'y') {
+	//seg fault
 
-		this->arrows--;
+	for (int i = 1, j = 1; i < 4 && j < 4; i++, j++) {
+		int a = this->y;
+		int b = this->x;			
+			
+		if (direction == 'n' && x != 0)
+			a = this->x - i;
+		if (direction == 's' && x != (cave_size - 1))
+			a = this->x + i;
+		if (direction == 'w' && y != 0)
+			b = this->y - i;
+		if (direction == 'e' && y != (cave_size - 1))
+			b = this->y + i;
 
-		std::cout << "Which direction would you like to shoot the arrow?" << '\n';
-		if (x != 0)
-			std::cout << "Enter n for north." << '\n';
-		if (y != (cave_size - 1))
-			std::cout << "Enter e for east." << '\n';
-		if (x != (cave_size - 1))
-			std::cout << "Enter s for south." << '\n';
-		if (y != 0) 
-			std::cout << "Enter w for west." << '\n';
-
-		std::cin >> direction;
-		
-		for (int i = 0, j = 0; i < 3 && j < 3; i++, j++) {
-
-				if (direction == 'n')
-					j = this->y + 1;
-				if (direction == 's')
-					j = this->y - 1;
-				if (direction == 'w')
-					i = this->x - 1;
-				if (direction == 'e')
-					i = this->x + 1;
-
-				if (cave.get_location(i, j).has_wumpus()) {
-					killed_wumpus = true;
-				}
+		if (cave.get_location(a, b).has_wumpus()) {
+				killed_wumpus = true;
+			}
 		}
 		
 		if (killed_wumpus == false) {
 			srand(time(NULL));
 			int w;
 			w = rand() % 4;
-			if (w != 1) {
+			if (w != 1) { //75% chance
 				cave.wumpus();//wumpus moves to new spot	
 			}
 		}
 		
-	}
 }
+
 
 void Player::move_around() {
 
@@ -105,16 +117,19 @@ void Player::move_around() {
 	std::cin >> direction;
 
 	if (direction == 'n')
-		this->y += 1;
-	if (direction == 's')
-		this->y -= 1;
-	if (direction == 'w')
 		this->x -= 1;
-	if (direction == 'e')
+	if (direction == 's')
 		this->x += 1;
+	if (direction == 'w')
+		this->y -= 1;
+	if (direction == 'e')
+		this->y += 1;
 }
 
 void Player::room_check() {
+
+	std::cout << "Current location: (" << this->x << ", " << this->y << ")." << std::endl;
+
 	if (cave.get_location(x, y).has_bat()) {
 		std::cout << "Oh no! You've been dragged to a new location by bats!" << std::endl;
 		srand(time(NULL));

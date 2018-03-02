@@ -40,9 +40,17 @@ Cave::Cave(int n) : cave_size(n) {
 	wumpus();
 	gold();
 }
-	
+
+void Cave::operator=(const Cave& c) {
+	this->cave_size = c.cave_size;
+	for (int i = 0, j = 0; i < cave.size() && j < cave.size(); i++, j++) {
+		this->cave[i][j] = c.cave[i][j];
+	}
+}
+
 Room Cave::get_location(int x, int y) {
-	return cave[x][y];
+	Room r = this->cave[x][y];
+	return r;
 }
 
 void Cave::bats() { //give 2 rand rooms bat

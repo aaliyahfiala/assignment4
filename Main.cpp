@@ -17,23 +17,52 @@
 
 int main(int argc, char *argv[]) {
 	
-//	Player p = atoi(argv[1]);	
-//insert error, cant have less than 4 * 4 return 1;
+	char play_again = '0';
+
+/*	Player p = atoi(argv[1]);	
+	if (atoi(argv[1]) < 4) {
+		std::cout << "Map is too small!" << std::endl;
+		return 1;
+	}*/
 
 	Player p;
+	do{
 
-	do {
+		do {
 
-		std::cout << "You have " << p.get_arrows() << " arrows." << std::endl;
+			std::cout << "You have " << p.get_arrows() << " arrows." << std::endl;
+			
+			std::cout << "Would you like to move or shoot an arrow? m/a" << std::endl;
+			char turn = '0';
+
+			std::cin >> turn;
+
+			if (turn == 'a') {
+				p.shoot_arrow();
+			}
+			
+			if (turn == 'm') {
+				p.move_around();
+			}
+
+			p.room_check();
+
+		} while (!p.is_game_over() || !p.is_game_won());	
 	
-		p.move_around();
-
-		p.shoot_arrow();
+		std::cout << "Would you like to play again? y/n" << std::endl;
+		std::cin >> play_again;
 		
-		p.room_check();
-
-	} while (p.is_game_over() == true || p.is_game_won() == true);	
-
+		if (play_again == 'y') {
+			std::cout << "Would like to play with the same map or a new one? s/n" << std::endl;
+			char map = '0';
+			std::cin >> map;
+			if (map == 'n') {
+				Player new_p;
+				p = new_p;
+			}
+		}
+	} while (play_again == 'y');
+	
 	return 0;
 }
 
