@@ -102,7 +102,7 @@ void Cave::bats() { //give 2 rand rooms bat
 		cave.at(x).at(y).give_bat();
 
 		//FOR TESTING PURPOSES DELETE LATER
-		std::cout << "Bats at (" << x << ", " << y << ")." << std::endl;
+//		std::cout << "Bats at (" << x << ", " << y << ")." << std::endl;
 	}
 }
 
@@ -128,7 +128,7 @@ void Cave::pits() { //give 2 rand rooms pits
 		cave.at(x).at(y).give_pit();
 
 		//FOR TESTING PURPOSES DELETE LATER
-		std::cout << "Pits at (" << x << ", " << y << ")." << std::endl;
+//		std::cout << "Pits at (" << x << ", " << y << ")." << std::endl;
 	}
 }
 
@@ -152,7 +152,7 @@ void Cave::gold() { //give 1 room gold
 	cave.at(x).at(y).give_gold();
 
 	//FOR TESTING PURPOSES DELETE LATER
-	std::cout << "Gold at (" << x << ", " << y << ")." << std::endl;
+//	std::cout << "Gold at (" << x << ", " << y << ")." << std::endl;
 }
 
 /*********************************************************************
@@ -175,7 +175,7 @@ void Cave::wumpus() { //give 1 room wumpus
 	cave.at(x).at(y).give_wumpus();
 
 	//FOR TESTING PURPOSES DELETE LATER
-	std::cout << "Wumpus at (" << x << ", " << y << ")." << std::endl;
+//	std::cout << "Wumpus at (" << x << ", " << y << ")." << std::endl;
 }
 
 /*********************************************************************
@@ -198,7 +198,7 @@ std::pair<int, int> Cave::start() { //determine starting/end room and return x, 
 	cave.at(x).at(y).give_start();
 
 	//FOR TESTING PURPOSES DELETE LATER
-	std::cout << "Starting point at (" << x << ", " << y << ")." << std::endl;
+//	std::cout << "Starting point at (" << x << ", " << y << ")." << std::endl;
 
 	return std::make_pair(x,y);
 }

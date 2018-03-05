@@ -19,6 +19,7 @@
 int main(int argc, char *argv[]) {
 	char play_again = '0';
 	int break_loop = 0;
+	int break_l = 0;
 	
 	if (atoi(argv[1]) < 4) {
 		std::cout << "Map is too small!" << std::endl;
@@ -77,8 +78,16 @@ int main(int argc, char *argv[]) {
 					Player new_p = atoi(argv[1]);
 					p = new_p;
 				}
+				if (p.is_game_over() == true) {
+					break_l = 1;
+				}
+
+				if (p.is_game_won() == true) {
+					break_l = 1;
+				}
+
 			}
-		} while (play_again == 'y'); 
+		} while (play_again == 'y'&& break_l == 0); 
 
 	} else {
 		d.play_game();

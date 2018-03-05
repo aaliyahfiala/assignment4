@@ -33,6 +33,8 @@ std::string Bats::get_percept() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: none
  * *********************************************************************/ 
-Bats::~Bats() {}
+Bats::~Bats() {
+	
+}
 
 

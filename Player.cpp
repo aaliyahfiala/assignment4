@@ -163,8 +163,8 @@ void Player::shoot_arrow() {
 		if (direction == 'e' && (y + i) < cave_size) {
 			b = this->y + i;
 		}
-	
-		std::cout << "Shoot arrow (a, b) = (" << a << ", " << b << ")" << std::endl;
+	//FOR TESTING
+//		std::cout << "Shoot arrow (a, b) = (" << a << ", " << b << ")" << std::endl;
 	
 		if (cave.get_location(a, b).has_wumpus()) {
 			this->killed_wumpus = true;
@@ -226,8 +226,8 @@ void Player::move_around() {
  * ** Post-Conditions: none
  * *********************************************************************/ 
 void Player::room_check() {
-
-	std::cout << "Current location: (" << this->x << ", " << this->y << ")." << std::endl;
+	//FOR TESTING 
+	//std::cout << "Current location: (" << this->x << ", " << this->y << ")." << std::endl;
 
 	if (cave.get_location(x, y).has_bat()) {
 		std::cout << "Oh no! You've been dragged to a new location by bats!" << std::endl;

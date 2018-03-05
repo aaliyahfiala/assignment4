@@ -21,10 +21,10 @@ Event::Event() : percept("No Percept"){}
  * ** Parameters: none
  * ** Pre-Conditions: none
  * ** Post-Conditions: none
- * *********************************************************************/ 
+ * ******************************************************************* 
 std::string Event::get_percept() {
 	return this->percept;
-}
+}*/
 
 /*********************************************************************
  * ** Function: ~Event()
@@ -34,4 +34,5 @@ std::string Event::get_percept() {
  * ** Post-Conditions: none
  * *********************************************************************/ 
 Event::~Event() {
+	//delete this->percept;
 }

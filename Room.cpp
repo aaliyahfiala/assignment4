@@ -6,10 +6,10 @@
  * *********************************************************************/
 #include "Room.hpp"
 
-Room::Room() : event(event), event_type('n') {} //intialize to no event occurs in event class
+Room::Room() : event(NULL), event_type('n') {} //intialize to no event occurs in event class
 
 Room::~Room() {
-//	delete event; compiler error?
+	//delete event; 
 }
 
 std::string Room::display_percept() { 
@@ -87,5 +87,6 @@ bool Room::is_start() {
 }
 
 void Room::delete_event() {
-	this->event = new Event;
+	this->event = NULL;
+	this->event_type = 'n';
 }

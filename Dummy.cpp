@@ -157,35 +157,39 @@ void dPlayer::shoot_arrow() {
  * ** Post-Conditions: user moved to a new spot in the cave
  * *********************************************************************/ 
 void dPlayer::move_around() {
-
 	this->cave.percepts(x, y);
 	
 	int r = rand_pick(4, 1);
+	srand(r);
+
+	std::cout << "Random pick: " << r << std::endl;
 
 	switch(r) {
 		case 1: 
 			direction = 'n';
 			if (x == 0) {
-				direction = 'e';
+				direction = 's';
 			}
 			break;
 		case 2: 	
 			direction = 'e';
-			if (y == (cave_size - 1)) {
-				direction = 's';
-			}
-			break;
-		case 3:
-			direction = 's';
 			if (x == (cave_size - 1)) {
 				direction = 'w';
 			}
 			break;
-		case 4: 
-			direction = 'w';
+		case 3:
+			direction = 's';
 			if (y == 0) {
 				direction = 'n';
 			}
+
+			break;
+		case 4: 
+			direction = 'w';
+			if (x == 0) {
+				direction = 'e';
+			}
+
 			break;
 	}
 	
@@ -200,7 +204,7 @@ void dPlayer::move_around() {
 	if (direction == 'e')
 		this->y += 1;
 
-	//char prvios direction
+	//char prvios direction?
 	//dont move?
 }
 
@@ -212,7 +216,7 @@ void dPlayer::move_around() {
  * ** Post-Conditions: none
  * *********************************************************************/ 
 void dPlayer::room_check() {
-
+	
 	std::cout << "Current location: (" << this->x << ", " << this->y << ")." << std::endl;
 
 	if (cave.get_location(x, y).has_bat()) {
@@ -284,13 +288,15 @@ void dPlayer::play_game() {
 		if(cave.wumpus_nearby(x, y) && killed_wumpus == false) {
  			shoot_arrow();
 		}	
-
+		
+		room_check();
+		
 		if (is_game_over() == true) {
 			break_loop = 1;
 		}
 		if (is_game_won() == true) {
 			break_loop = 1;
-		}	
+		}
 
 	} while (break_loop == 0);
 }

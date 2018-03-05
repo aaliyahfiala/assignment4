@@ -14,7 +14,7 @@ private:
 	std::string percept;
 public:
 	Event();
-	virtual std::string get_percept();
+	virtual std::string get_percept() = 0;
 	virtual ~Event();
 };
 
