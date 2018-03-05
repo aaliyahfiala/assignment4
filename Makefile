@@ -1,7 +1,10 @@
 default : Main
 
-Main : Main.cpp Player.o Cave.o Event.o Room.o Start.o Bats.o Pit.o Gold.o Wumpus.o 
-	g++ -g Main.cpp Player.o Cave.o Event.o Room.o Start.o Bats.o Pit.o Gold.o Wumpus.o -o Main
+Main : Main.cpp Player.o Dummy.o Cave.o Event.o Room.o Start.o Bats.o Pit.o Gold.o Wumpus.o 
+	g++ -g Main.cpp Player.o Dummy.o Cave.o Event.o Room.o Start.o Bats.o Pit.o Gold.o Wumpus.o -o Main
+
+Dummy.o : Dummy.cpp Dummy.hpp
+	g++ -g -c Dummy.cpp -o Dummy.o
 
 Player.o : Player.cpp Player.hpp
 	g++ -g -c Player.cpp -o Player.o

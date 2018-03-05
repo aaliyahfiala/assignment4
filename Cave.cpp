@@ -243,3 +243,37 @@ void Cave::percepts(int x, int y) {
 void Cave::clear_room(int x, int y) { //clear that rooms event
 	cave.at(x).at(y).delete_event();
 }
+
+/*********************************************************************
+ * ** Function: wumpus_nearby()
+ * ** Description: determines if the wumpus percept has been displayed
+ * ** Parameters: int x, int y
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: wumpus nearby is returned true or false
+ * *********************************************************************/ 
+bool Cave::wumpus_nearby(int x, int y) {
+	bool w_nearby = false; 
+
+	if (y != (cave_size - 1)) {
+		if (cave.at(x).at(y + 1).has_wumpus())
+			w_nearby = true;
+	}
+	
+	if (x != 0) {
+		if (cave.at(x - 1).at(y).has_wumpus())
+			w_nearby = true;
+	}
+
+	if (x != (cave_size - 1)) {
+		if (cave.at(x + 1).at(y).has_wumpus())
+			w_nearby = true;
+	}
+
+	if (y != 0) {
+		if (cave.at(x).at(y - 1).has_wumpus())
+			w_nearby = true;
+	}
+
+	return w_nearby;	
+}
+

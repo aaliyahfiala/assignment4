@@ -34,6 +34,7 @@ public:
 	Player(int cave_size);
 	
 	void operator=(const Player& p);
+	void reset_game();
 
 	bool is_game_over();
 	bool is_game_won();

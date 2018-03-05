@@ -1,81 +1,26 @@
 /*********************************************************************
- * ** Program Filename: Player.cpp
+ * ** Program Filename: Dummy.cpp
  * ** Description: This is the Player class function definitions
  * ** Input: none
  * ** Output: none
  * *********************************************************************/
-#include "Player.hpp"
+#include "Dummy.hpp"
 
 /*********************************************************************
- * ** Function: Player()
- * ** Description: Default constructor for the player class
- * ** Parameters: none
- * ** Pre-Conditions: none
- * ** Post-Conditions: player is intialized
- * *********************************************************************/ 
-Player::Player() : cave_size(4), cave(4), arrows(3), direction('q'), game_over(false), game_won(false), has_gold(false), killed_wumpus(false) {
-	std::pair<int, int> p = cave.start();
-	this->x = p.first;
-	this->y = p.second; 
-
-	this->x_start = p.first;
-	this->y_start = p.second;
-}
-
-/*********************************************************************
- * ** Function: Player()
+ * ** Function: dPlayer()
  * ** Description: Parameterized constructor for the player class
  * ** Parameters: cave_size
  * ** Pre-Conditions: none
  * ** Post-Conditions: player is intialized
  * *********************************************************************/ 
-Player::Player(int cave_size) : cave_size(cave_size), cave(cave_size), arrows(3), direction('x'), game_over(false), game_won(false), has_gold(false), killed_wumpus(false) {
+dPlayer::dPlayer(int cave_size) : cave_size(cave_size), cave(cave_size), arrows(3), direction('x'), game_over(false), game_won(false), has_gold(false), killed_wumpus(false) {
 	std::pair<int, int> p = cave.start();
 	this->x = p.first;
 	this->y = p.second;
-
 	this->x_start = p.first;
 	this->y_start = p.second;
 }
 
-/*********************************************************************
- * ** Function: operator=()
- * ** Description: Operator overload for the assignment operator
- * ** Parameters: const Player& p
- * ** Pre-Conditions: none
- * ** Post-Conditions: none
- * *********************************************************************/ 
-void Player::operator=(const Player& p) {
-	this->cave = p.cave;
-	this->cave_size = p.cave_size;
-	this->game_over = false;
-	this->game_won = false;
-	this->has_gold = false;
-	this->killed_wumpus = false;
-	this->arrows = 3;
-	this->direction = 'x';
-	this->x = p.x;
-	this->y = p.y;
-}
-
-/*********************************************************************
- * ** Function: reset_game()
- * ** Description: Operator overload for the assignment operator
- * ** Parameters: const Player& p
- * ** Pre-Conditions: none
- * ** Post-Conditions: none
- * *********************************************************************/ 
-void Player::reset_game() {
-	this->game_over = false;
-	this->game_won = false;
-	this->has_gold = false;
-	this->killed_wumpus = false;
-	this->arrows = 3;
-	this->direction = 'x';
-	this->x = x_start;
-	this->y = y_start;
-	//replace wumpus
-}
 /*********************************************************************
  * ** Function: is_game_over()
  * ** Description: Determines if the game is over
@@ -83,7 +28,7 @@ void Player::reset_game() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: none
  * *********************************************************************/ 
-bool Player::is_game_over() {
+bool dPlayer::is_game_over() {
 	//std::cout << "bool is_game_over() : " << this->game_over << std::endl;
 	return this->game_over;	
 }
@@ -95,7 +40,7 @@ bool Player::is_game_over() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: none
  * *********************************************************************/ 
-bool Player::is_game_won() {
+bool dPlayer::is_game_won() {
 	//std::cout << "bool is_game_won() : " << this->game_won << std::endl;
 	return this->game_won;
 }
@@ -107,7 +52,7 @@ bool Player::is_game_won() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: none
  * *********************************************************************/ 
-int Player::get_arrows() {
+int dPlayer::get_arrows() {
 	return this->arrows;
 }
 
@@ -118,7 +63,7 @@ int Player::get_arrows() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: arrow is shot
  * *********************************************************************/ 
-void Player::shoot_arrow() {
+void dPlayer::shoot_arrow() {
 	if(this->arrows == 0 && killed_wumpus == false) {
 		std::cout << "You ran out of arrows! Game over." << std::endl;
 		this->game_over = true;
@@ -133,19 +78,38 @@ void Player::shoot_arrow() {
 	this->arrows--;
 
 	this->cave.percepts(x, y);
+	
+	int r = rand_pick(4, 1);
 
-	std::cout << "Which direction would you like to shoot the arrow?" << '\n';
+	switch(r) {
+		case 1: 
+			direction = 'n';
+			if (x == 0) {
+				direction = 'e';
+			}
+			break;
+		case 2: 	
+			direction = 'e';
+			if (y == (cave_size - 1)) {
+				direction = 's';
+			}
+			break;
+		case 3:
+			direction = 's';
+			if (x == (cave_size - 1)) {
+				direction = 'w';
+			}
+			break;
+		case 4: 
+			direction = 'w';
+			if (y == 0) {
+				direction = 'n';
+			}
+			break;
+	}
 
-	if (x != 0)
-		std::cout << "Enter n for north." << '\n';
-	if (y != (cave_size - 1))
-		std::cout << "Enter e for east." << '\n';
-	if (x != (cave_size - 1))
-		std::cout << "Enter s for south." << '\n';
-	if (y != 0) 
-		std::cout << "Enter w for west." << '\n';
+	std::cout << "Arrow shot " << direction << std::endl;
 
-	std::cin >> direction;
 	
 	for (int i = 1, j = 1; i < 4 && j < 4; i++, j++) {
 		int a = this->x;
@@ -192,21 +156,40 @@ void Player::shoot_arrow() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: user moved to a new spot in the cave
  * *********************************************************************/ 
-void Player::move_around() {
+void dPlayer::move_around() {
 
 	this->cave.percepts(x, y);
 	
-	std::cout << "Which direction would you like to move in?" << '\n';
-	if (x != 0)
-		std::cout << "Enter n for north." << '\n';
-	if (x != (cave_size - 1))
-		std::cout << "Enter s for south." << '\n';
-	if (y != 0) 
-		std::cout << "Enter w for west." << '\n';
-	if (y != (cave_size - 1))
-		std::cout << "Enter e for east." << '\n';
+	int r = rand_pick(4, 1);
 
-	std::cin >> direction;
+	switch(r) {
+		case 1: 
+			direction = 'n';
+			if (x == 0) {
+				direction = 'e';
+			}
+			break;
+		case 2: 	
+			direction = 'e';
+			if (y == (cave_size - 1)) {
+				direction = 's';
+			}
+			break;
+		case 3:
+			direction = 's';
+			if (x == (cave_size - 1)) {
+				direction = 'w';
+			}
+			break;
+		case 4: 
+			direction = 'w';
+			if (y == 0) {
+				direction = 'n';
+			}
+			break;
+	}
+	
+	std::cout << "Moving " << direction << std::endl;
 
 	if (direction == 'n')
 		this->x -= 1;
@@ -216,6 +199,9 @@ void Player::move_around() {
 		this->y -= 1;
 	if (direction == 'e')
 		this->y += 1;
+
+	//char prvios direction
+	//dont move?
 }
 
 /*********************************************************************
@@ -225,7 +211,7 @@ void Player::move_around() {
  * ** Pre-Conditions: none
  * ** Post-Conditions: none
  * *********************************************************************/ 
-void Player::room_check() {
+void dPlayer::room_check() {
 
 	std::cout << "Current location: (" << this->x << ", " << this->y << ")." << std::endl;
 
@@ -264,3 +250,47 @@ void Player::room_check() {
 	}
 }
 
+/*********************************************************************
+ * ** Function: rand_pick()
+ * ** Description: randomly picks a number between a and b
+ * ** Parameters: int a, int b
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: random number returned
+ * *********************************************************************/ 
+int dPlayer::rand_pick(int a, int b) {
+	srand(time(NULL));
+	int r;
+	if (a < b) {
+		r = rand() % (b - a) + a + 1;
+	}
+	if (b < a) {
+		r = rand() % (a - b) + b + 1;
+	}
+	return r;
+}
+
+/*********************************************************************
+ * ** Function: play_game()
+ * ** Description: calls functions needed for dummy to play the game
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: none
+ * *********************************************************************/ 
+void dPlayer::play_game() { 
+	int break_loop = 0;
+	do{
+		move_around();
+	
+		if(cave.wumpus_nearby(x, y) && killed_wumpus == false) {
+ 			shoot_arrow();
+		}	
+
+		if (is_game_over() == true) {
+			break_loop = 1;
+		}
+		if (is_game_won() == true) {
+			break_loop = 1;
+		}	
+
+	} while (break_loop == 0);
+}

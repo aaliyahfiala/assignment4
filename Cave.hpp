@@ -33,6 +33,7 @@ public:
 	
 	void percepts(int x, int y); //where [a][b] is positiong, displays message if event is up/down/left/right
 	void clear_room(int x, int y); 
+	bool wumpus_nearby(int x, int y);
 };
 
 #endif
