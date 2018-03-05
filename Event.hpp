@@ -16,8 +16,6 @@ public:
 	Event();
 	virtual std::string get_percept();
 	virtual ~Event();
-
-
 };
 
 #endif

@@ -8,7 +8,13 @@
 #include <stdlib.h> //for rand and srand
 #include <time.h> //for time
 
-
+/*********************************************************************
+ * ** Function: Cave()
+ * ** Description: Default constructor for the cave class
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: none
+ * *********************************************************************/ 
 Cave::Cave() : cave_size(4) {
 	for (int i = 0; i < 4; i++) {
 		std::vector<Room> row;
@@ -25,6 +31,13 @@ Cave::Cave() : cave_size(4) {
 	gold();
 }
 
+/*********************************************************************
+ * ** Function: Cave()
+ * ** Description: Parameterized constructor for the cave class
+ * ** Parameters: cave_size
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: cave is intialized
+ * *********************************************************************/ 
 Cave::Cave(int n) : cave_size(n) {
 	for (int i = 0; i < n; i++) {
 		std::vector<Room> row;
@@ -41,6 +54,13 @@ Cave::Cave(int n) : cave_size(n) {
 	gold();
 }
 
+/*********************************************************************
+ * ** Function: operator=()
+ * ** Description: Assignment overload for the assignment operator
+ * ** Parameters: const Cave& c
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: none
+ * *********************************************************************/ 
 void Cave::operator=(const Cave& c) {
 	this->cave_size = c.cave_size;
 	for (int i = 0, j = 0; i < cave.size() && j < cave.size(); i++, j++) {
@@ -48,11 +68,25 @@ void Cave::operator=(const Cave& c) {
 	}
 }
 
+/*********************************************************************
+* ** Function: get_location
+* ** Description: returns the room in the cave at specified location
+* ** Parameters: int x, int y
+* ** Pre-Conditions: none
+* ** Post-Conditions: room is asscceible
+* *********************************************************************/ 
 Room Cave::get_location(int x, int y) {
 	Room r = this->cave[x][y];
 	return r;
 }
 
+/*********************************************************************
+ * ** Function: bats()
+ * ** Description: Puts two bats in the cave
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: two bats are randomly placed
+ * *********************************************************************/ 
 void Cave::bats() { //give 2 rand rooms bat
 	srand(time(NULL));
 	int x, y;
@@ -72,6 +106,13 @@ void Cave::bats() { //give 2 rand rooms bat
 	}
 }
 
+/*********************************************************************
+ * ** Function: pits()
+ * ** Description: randomly puts pits in the cave
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: pits are allocated
+ * *********************************************************************/ 
 void Cave::pits() { //give 2 rand rooms pits 
 	srand(time(NULL));
 	int x, y;
@@ -91,6 +132,13 @@ void Cave::pits() { //give 2 rand rooms pits
 	}
 }
 
+/*********************************************************************
+ * ** Function: gold()
+ * ** Description: randomly puts gold in the cave
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: gold is placed
+ * *********************************************************************/ 
 void Cave::gold() { //give 1 room gold 
 	srand(time(NULL));
 	int x, y;
@@ -107,6 +155,13 @@ void Cave::gold() { //give 1 room gold
 	std::cout << "Gold at (" << x << ", " << y << ")." << std::endl;
 }
 
+/*********************************************************************
+ * ** Function: wumpus()
+ * ** Description: randomly puts a wumpus in the cave
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: wumpus is placed
+ * *********************************************************************/ 
 void Cave::wumpus() { //give 1 room wumpus
 	srand(time(NULL));
 	int x, y;
@@ -123,6 +178,13 @@ void Cave::wumpus() { //give 1 room wumpus
 	std::cout << "Wumpus at (" << x << ", " << y << ")." << std::endl;
 }
 
+/*********************************************************************
+ * ** Function:start()
+ * ** Description: determines the starting point in the cave
+ * ** Parameters: none
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: start is placed
+ * *********************************************************************/ 
 std::pair<int, int> Cave::start() { //determine starting/end room and return x, y coordinates
 	srand(time(NULL));
 	int x, y;
@@ -141,8 +203,14 @@ std::pair<int, int> Cave::start() { //determine starting/end room and return x, 
 	return std::make_pair(x,y);
 }
  
-
-void Cave::percepts(int x, int y){
+/*********************************************************************
+ * ** Function: percepts()
+ * ** Description: Displays percepts in respective rooms in the cave
+ * ** Parameters: int x, int y
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: percepts are displayed to screen
+ * *********************************************************************/ 
+void Cave::percepts(int x, int y) {
 //where [a][b] is positiong, displays message if event is up/down/left/right
 	if (y != (cave_size - 1)) {
 		if (cave.at(x).at(y + 1).has_event())
@@ -163,4 +231,15 @@ void Cave::percepts(int x, int y){
 		if (cave.at(x).at(y - 1).has_event())
 			std::cout << cave.at(x).at(y - 1).display_percept() << std::endl;
 	}
+}
+
+/*********************************************************************
+ * ** Function: clear_room()
+ * ** Description: deletes the event place in the room
+ * ** Parameters: int x, int y
+ * ** Pre-Conditions: none
+ * ** Post-Conditions: event is deleted (changed to an event object)
+ * *********************************************************************/ 
+void Cave::clear_room(int x, int y) { //clear that rooms event
+	cave.at(x).at(y).delete_event();
 }

@@ -85,3 +85,7 @@ bool Room::is_start() {
 		start = true;
 	return start;
 }
+
+void Room::delete_event() {
+	this->event = new Event;
+}

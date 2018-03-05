@@ -40,6 +40,8 @@ public:
 	bool has_wumpus();
 	bool has_gold();
 	bool is_start();
+
+	void delete_event();
 };
 
 #endif

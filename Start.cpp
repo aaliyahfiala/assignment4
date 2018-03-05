@@ -23,7 +23,7 @@ Start::Start() {}
  * ** Post-Conditions: none
  * *********************************************************************/ 
 std::string Start::get_percept() {
-	return "This is where you start and end.";
+	return " ";
 }
 
 /*********************************************************************
