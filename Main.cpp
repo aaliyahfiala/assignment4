@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 				}
 
 			}
-		} while (play_again == 'y'&& break_l == 0); 
+		} while (play_again == 'y' && break_l == 0); 
 
 	} else {
 		d.play_game();

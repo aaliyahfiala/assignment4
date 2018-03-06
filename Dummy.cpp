@@ -158,12 +158,29 @@ void dPlayer::shoot_arrow() {
  * *********************************************************************/ 
 void dPlayer::move_around() {
 	this->cave.percepts(x, y);
-	
+	int a, s, w, d;	
 	int r = rand_pick(4, 1);
-	srand(r);
-
+	switch(r) {
+		case 1: 
+			a = rand_pick(4, 1);
+			r = a;
+			break;
+		case 2:
+			w = rand_pick(4, 1);
+			r = w;
+			break;
+		case 3:
+			d = rand_pick(4, 1);
+			r = d;
+			break;
+		case 4: 
+			s = rand_pick (4, 1);
+			r = s;
+			break;
+	}
+	
 	std::cout << "Random pick: " << r << std::endl;
-
+	
 	switch(r) {
 		case 1: 
 			direction = 'n';
@@ -173,20 +190,20 @@ void dPlayer::move_around() {
 			break;
 		case 2: 	
 			direction = 'e';
-			if (x == (cave_size - 1)) {
+			if (y == (cave_size - 1)) {
 				direction = 'w';
 			}
 			break;
 		case 3:
 			direction = 's';
-			if (y == 0) {
+			if (x == (cave_size - 1)) {
 				direction = 'n';
 			}
 
 			break;
 		case 4: 
 			direction = 'w';
-			if (x == 0) {
+			if (y == 0) {
 				direction = 'e';
 			}
 
@@ -203,7 +220,7 @@ void dPlayer::move_around() {
 		this->y -= 1;
 	if (direction == 'e')
 		this->y += 1;
-
+	
 	//char prvios direction?
 	//dont move?
 }
@@ -281,6 +298,7 @@ int dPlayer::rand_pick(int a, int b) {
  * ** Post-Conditions: none
  * *********************************************************************/ 
 void dPlayer::play_game() { 
+	srand(time(NULL));
 	int break_loop = 0;
 	do{
 		move_around();
